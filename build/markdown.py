@@ -233,7 +233,7 @@ class _Renderer:
                 while i < len(lines) and not _starts_block(lines, i):
                     para.append(lines[i].strip())
                     i += 1
-                out.append(f"<p>{inline(' '.join(para))}</p>")
+                out.append(f"<p>{'<br>'.join(inline(line) for line in para)}</p>")  # line breaks are kept, as in chat Markdown
         return "".join(out)
 
 

@@ -333,7 +333,8 @@ p { margin: 0; }
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
 .nav__link[aria-current] { color: var(--leaf-700); background: var(--paper); box-shadow: var(--neu-in-sm); font-weight: 700; }
-.nav__drawer-cta { margin-top: auto; }
+.nav__drawer-cta { display: grid; gap: 10px; margin-top: auto; }
+.nav__drawer-cta small, .call-pop__panel small, .price-call > span { color: var(--muted); font-size: 0.82rem; }
 .nav-backdrop {
   position: fixed; inset: 0; z-index: 65; background: rgba(20, 35, 25, 0.28);
   -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
@@ -960,6 +961,15 @@ body.nav-open { overflow: hidden; }
   transition: transform 0.35s var(--ease), opacity 0.35s;
 }
 .mobile-cta .btn { min-height: 46px; font-size: 0.95rem; }
+.call-pop { position: relative; }
+.call-pop > summary { width: 100%; list-style: none; }
+.call-pop > summary::-webkit-details-marker { display: none; }
+.call-pop[open] > summary { box-shadow: inset 3px 3px 8px rgba(10, 50, 25, 0.45), inset -2px -2px 6px rgba(255, 255, 255, 0.15); }
+.call-pop__panel {
+  position: absolute; bottom: calc(100% + 14px); inset-inline-start: -8px; width: min(78vw, 280px);
+  display: grid; gap: 8px; padding: 12px; border-radius: 20px;
+  background: rgba(250, 248, 242, 0.97); box-shadow: 0 14px 36px rgba(40, 50, 30, 0.22);
+}
 .mobile-cta.is-hidden { transform: translateY(140%); opacity: 0; }
 body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
 @media (min-width: 760px) {
@@ -988,6 +998,8 @@ body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
 /* ---------- Reveal on scroll ---------- */
 .js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
 .js [data-reveal].is-visible { opacity: 1; transform: none; }
+
+.price-call { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 14px; }
 
 /* ---------- Blog ---------- */
 .blog-note { margin: 0 0 clamp(22px, 3vw, 34px); padding: 14px 18px; border-radius: var(--radius); background: var(--glass-water); box-shadow: var(--glass-shadow); }

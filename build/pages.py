@@ -9,7 +9,8 @@ from urllib.parse import quote_plus
 
 from blog import blog_teaser, page_blog
 from components import (
-    cta_band, default_cta, e, eyebrow, icon_cards, img, iso_badges, page_hero, phone_text, photo, section_head,
+    cta_band, default_cta, e, eyebrow, icon_cards, img, iso_badges, page_hero, phone_role, phone_text, photo,
+    quote_buttons, section_head,
 )
 from data import CERTS, EMAIL, INSTAGRAM, INSTAGRAM_URL, MAP_QUERY, PHONES
 from i18n import Content, fmt_number, fmt_weight, local_digits
@@ -325,6 +326,7 @@ def _calculator(t: Content) -> str:
             <p class="price__status" data-out="price-status">{e(p['price_unavailable'])}</p>
           </div>
           <p class="note">{icon('flask')}<span>{e(p['price_note'])}</span></p>
+          <div class="price-call"><span>{e(t['contact']['roles']['quote'])}</span>{quote_buttons(t, 'btn btn--neu btn--sm')}</div>
         </div>
       </div>
     </div>
@@ -573,7 +575,7 @@ def page_contact(t: Content) -> str:
     phone_icons = {"fax": "fax", "ceo": "user"}
     cards = [
         _contact_card(
-            phone_icons.get(p["key"], "phone"), c["roles"][p["key"]],
+            phone_icons.get(p["key"], "phone"), phone_role(p, t),
             f'<a class="contact-card__value" href="tel:{p["tel"]}" dir="ltr">{phone_text(p, lang)}</a>',
             p["display"].replace(" ", ""), t,
         )

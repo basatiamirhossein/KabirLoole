@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import html
 
-from data import PHONES, Phone
+from data import QUOTE_PHONES, Phone
 from i18n import Content, local_digits
 from icons import icon
 from scene import wave_divider
@@ -17,6 +17,19 @@ def e(text: str) -> str:
 def phone_text(phone: Phone, lang: str) -> str:
     """Phone number in the page's digits; tel: links keep the ASCII form."""
     return local_digits(phone["display"], lang)
+
+
+def phone_role(phone: Phone, t: Content) -> str:
+    """Role under a number; price-inquiry numbers say so."""
+    roles = t["contact"]["roles"]
+    return f"{roles[phone['key']]} · {roles['quote']}" if phone["quote"] else roles[phone["key"]]
+
+
+def quote_buttons(t: Content, cls: str = "btn btn--primary") -> str:
+    return "".join(
+        f'<a class="{cls}" href="tel:{p["tel"]}">{icon("phone")}<span dir="ltr">{phone_text(p, t["lang"])}</span></a>'
+        for p in QUOTE_PHONES
+    )
 
 
 def img(name: str, alt: str, w: int, h: int, cls: str = "", sizes: str = "(min-width: 900px) 50vw, 100vw") -> str:
@@ -78,10 +91,7 @@ def page_hero(t: Content, page: str) -> str:
 
 
 def cta_band(t: Content, title: str, text: str) -> str:
-    phones = "".join(
-        f'<a class="btn btn--primary" href="tel:{p["tel"]}">{icon("phone")}<span dir="ltr">{phone_text(p, t["lang"])}</span></a>'
-        for p in PHONES if p["key"] == "sales"
-    )
+    phones = quote_buttons(t)
     return f"""
 <section class="section section--tight">
   <div class="container">

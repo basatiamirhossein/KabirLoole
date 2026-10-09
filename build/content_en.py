@@ -300,7 +300,7 @@ T = {
         "eyebrow": "Contact",
         "title": "Let's talk",
         "lead": "For quotes, technical advice or orders, contact Kabirloole's managing director or sales team.",
-        "roles": {"ceo": "Managing director", "sales": "Sales", "fax": "Tel / fax"},
+        "roles": {"ceo": "Managing director", "sales": "Sales", "fax": "Tel / fax", "quote": "Price inquiry"},
         "email_label": "Email",
         "insta_label": "Instagram",
         "address_label": "Factory address",

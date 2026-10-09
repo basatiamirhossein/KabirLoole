@@ -74,12 +74,31 @@ function initLanguageMemory(): void {
   storageSet("kl-lang", pageLang());
 }
 
+/** The call button's number list closes on a tap outside it, on Escape, and when the bar hides. */
+function bindCallPopover(cta: HTMLElement): void {
+  const pop = qs<HTMLDetailsElement>(".call-pop", cta);
+  if (!pop) return;
+  document.addEventListener("click", (event: MouseEvent) => {
+    if (pop.open && event.target instanceof Node && !pop.contains(event.target)) pop.open = false;
+  });
+  document.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key === "Escape") pop.open = false;
+  });
+}
+
 function initMobileCta(): void {
   const cta = qs("[data-mobile-cta]");
   const footer = qs(".site-footer");
-  if (!cta || !footer || !("IntersectionObserver" in window)) return;
+  if (!cta) return;
+  bindCallPopover(cta);
+  if (!footer || !("IntersectionObserver" in window)) return;
+  const pop = qs<HTMLDetailsElement>(".call-pop", cta);
   const observer = new IntersectionObserver(
-    (entries) => entries.forEach((entry) => cta.classList.toggle("is-hidden", entry.isIntersecting)),
+    (entries) =>
+      entries.forEach((entry) => {
+        cta.classList.toggle("is-hidden", entry.isIntersecting);
+        if (entry.isIntersecting && pop) pop.open = false;
+      }),
     { threshold: 0.05 },
   );
   observer.observe(footer);

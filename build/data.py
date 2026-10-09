@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Final, NamedTuple, TypedDict
 
 SITE_URL: Final[str] = ""  # e.g. "https://kabirloole.ir"; enables canonical, hreflang, sitemap and robots
-ASSET_VERSION: Final[str] = "2.1.0"  # bump to bust browser caches after a release
+ASSET_VERSION: Final[str] = "2.2.0"  # bump to bust browser caches after a release
 
 LANGS: Final[tuple[str, ...]] = ("fa", "ar", "en")
 DEFAULT_LANG: Final[str] = "fa"
@@ -16,14 +16,18 @@ class Phone(TypedDict):
     key: str
     display: str
     tel: str
+    quote: bool  # listed wherever the site offers a price inquiry
 
 
 PHONES: Final[list[Phone]] = [
-    {"key": "ceo", "display": "0918 141 0327", "tel": "+989181410327"},
-    {"key": "sales", "display": "0912 224 1585", "tel": "+989122241585"},
-    {"key": "sales", "display": "0910 224 1585", "tel": "+989102241585"},
-    {"key": "fax", "display": "084 3522 4111", "tel": "+988435224111"},
+    {"key": "ceo", "display": "0918 141 0327", "tel": "+989181410327", "quote": True},
+    {"key": "sales", "display": "0912 224 1585", "tel": "+989122241585", "quote": True},
+    {"key": "sales", "display": "0910 224 1585", "tel": "+989102241585", "quote": False},
+    {"key": "fax", "display": "084 3522 4111", "tel": "+988435224111", "quote": False},
 ]
+
+# Price-inquiry numbers, sales line first.
+QUOTE_PHONES: Final[list[Phone]] = sorted((p for p in PHONES if p["quote"]), key=lambda p: p["key"] != "sales")
 
 EMAIL: Final[str] = "KLS_Basati@yahoo.com"
 INSTAGRAM: Final[str] = "kabirloole"

@@ -6,7 +6,7 @@ import json
 from collections.abc import Callable
 from typing import NamedTuple
 
-from components import e, phone_text
+from components import e, phone_role, phone_text, quote_buttons
 from data import (
     ASSET_VERSION, DEFAULT_LANG, EMAIL, INSTAGRAM, INSTAGRAM_URL, LANGS, PAGES, PHONES, SITE_URL, TYPEFACES,
 )
@@ -145,7 +145,6 @@ def header(t: Content, page: str, info: PageInfo) -> str:
         f'<li><a class="nav__link" href="{p}.html"{current if p == info.nav else ""}>{e(t["nav"][p])}</a></li>'
         for p in PAGES
     )
-    sales = PHONES[1]
     return f"""
 <a class="skip-link" href="#main">{e(t['ui']['skip'])}</a>
 <header class="site-header" data-header>
@@ -154,7 +153,7 @@ def header(t: Content, page: str, info: PageInfo) -> str:
     <nav class="nav" id="site-nav" aria-label="{e(t['ui']['menu'])}" data-nav>
       <ul class="nav__list" role="list">{links}</ul>
       {lang_switch(t, page, info, 'lang-switch--drawer')}
-      <a class="btn btn--primary nav__drawer-cta" href="tel:{sales['tel']}">{icon('phone')}<span dir="ltr">{phone_text(sales, t['lang'])}</span></a>
+      <div class="nav__drawer-cta"><small>{e(t['contact']['roles']['quote'])}</small>{quote_buttons(t)}</div>
     </nav>
     <div class="site-header__actions">
       {lang_switch(t, page, info)}
@@ -175,10 +174,9 @@ def footer(t: Content) -> str:
     links = "".join(f'<li><a href="{p}.html">{e(t["nav"][p])}</a></li>' for p in PAGES)
     phones = "".join(
         f'<li><a href="tel:{p["tel"]}">{icon("fax" if p["key"] == "fax" else "phone")}'
-        f'<span><small>{e(c["roles"][p["key"]])}</small><b dir="ltr">{phone_text(p, t["lang"])}</b></span></a></li>'
+        f'<span><small>{e(phone_role(p, t))}</small><b dir="ltr">{phone_text(p, t["lang"])}</b></span></a></li>'
         for p in PHONES
     )
-    sales = PHONES[1]
     return f"""
 <footer class="site-footer">
   {wave_divider('wave--footer')}
@@ -208,7 +206,10 @@ def footer(t: Content) -> str:
   </div>
 </footer>
 <div class="mobile-cta" data-mobile-cta>
-  <a class="btn btn--primary" href="tel:{sales['tel']}">{icon('phone')}<span>{e(t['ui']['call'])}</span></a>
+  <details class="call-pop">
+    <summary class="btn btn--primary">{icon('phone')}<span>{e(t['ui']['call'])}</span></summary>
+    <div class="call-pop__panel glass"><small>{e(t['contact']['roles']['quote'])}</small>{quote_buttons(t, 'btn btn--neu')}</div>
+  </details>
   <a class="btn btn--glass" href="products.html#calculator">{icon('scale')}<span>{e(t['ui']['calc'])}</span></a>
 </div>
 <button class="to-top" type="button" data-to-top aria-label="{e(t['ui']['back_top'])}" hidden>{icon('chevron')}</button>"""
