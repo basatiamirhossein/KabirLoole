@@ -1,0 +1,8 @@
+# Admin password hash, daily prices and login throttle data: created on the server, never committed
+server/storage/*
+!server/storage/.htaccess
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

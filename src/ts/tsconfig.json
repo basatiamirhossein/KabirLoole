@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "outDir": ".out",
+    "rootDir": ".",
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "newLine": "lf"
+  },
+  "files": [
+    "dom.ts",
+    "header.ts",
+    "reveal.ts",
+    "counters.ts",
+    "hero.ts",
+    "flow.ts",
+    "calc.ts",
+    "lightbox.ts",
+    "contact.ts",
+    "main.ts"
+  ]
+}
